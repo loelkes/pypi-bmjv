@@ -26,23 +26,6 @@ import logging, time
 
 logger = logging.getLogger(__name__)
 
-URLS = {
-    # Rechtssprechung des Bundesverfassungsgerichts
-    'bverfg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bverfg.xml',
-    # Rechtsprechung des Bundesgerichtshofs
-    'bgh': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bgh.xml',
-    # Rechtsprechung des Bundesverwaltungsgerichts
-    'bverwg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bverwg.xml',
-    # Rechtsprechung des Bundesfinanzhofs
-    'bfh': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bfh.xml',
-    # Rechtssprechung des Bundesarbeitsgerichts
-    'bag': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bag.xml',
-    # Rechtssprechung des Bundessoszialgerichts
-    'bsg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bsg.xml',
-    # Rechtssprechung des Bundespatengerichts
-    'bpatg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bpatg.xml'
-}
-
 class Law(object):
     def __init__(self, data):
         self.dateString = '%a, %d %b %Y %H:%M:%S GMT'
@@ -118,7 +101,26 @@ class BGBl(object):
     def formatted(self):
         return u'{} - {} - {}'.format(self.pubDate, self.title, self.description)
 
+
 class RechtsprechungImInternet(object):
+
+    URLS = {
+        # Rechtssprechung des Bundesverfassungsgerichts
+        'bverfg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bverfg.xml',
+        # Rechtsprechung des Bundesgerichtshofs
+        'bgh': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bgh.xml',
+        # Rechtsprechung des Bundesverwaltungsgerichts
+        'bverwg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bverwg.xml',
+        # Rechtsprechung des Bundesfinanzhofs
+        'bfh': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bfh.xml',
+        # Rechtssprechung des Bundesarbeitsgerichts
+        'bag': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bag.xml',
+        # Rechtssprechung des Bundessoszialgerichts
+        'bsg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bsg.xml',
+        # Rechtssprechung des Bundespatengerichts
+        'bpatg': 'https://www.rechtsprechung-im-internet.de/jportal/docs/feed/bsjrs-bpatg.xml'
+    }
+
     def __init__(self, id):
         self.id = id
         self.feed = self.selectCourt()
@@ -135,8 +137,8 @@ class RechtsprechungImInternet(object):
         self.__id = value if value else 'bverfg'
 
     def selectCourt(self):
-        if self.id in URLS:
-            return API(url=URLS[self.id], format='xml')
+        if self.id in self.URLS:
+            return API(url=self.URLS[self.id], format='xml')
         else:
             return False
 

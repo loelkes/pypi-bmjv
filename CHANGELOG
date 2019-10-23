@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] 2019-10-23
+### Added
+- List all available courts with ```python -m BMJV --list-courts```
+### Changed
+- Dictionary URLS is now in the ```RechtsprechungImInternet``` class.
+
+### Changed
+- CLI Arguments are now parsed with docopt
+- Log messages include name of the file for each message.
+
 ## [1.1.0] 2019-10-20
 ### Added
 - __main__.py so the module can be used as standalone script.
@@ -15,9 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Law.parse()
 - Judicature.parse()
-
-### Changed
-
 
 ## [1.0.0] 2019-10-19
  - Initial release

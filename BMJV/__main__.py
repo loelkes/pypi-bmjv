@@ -20,30 +20,58 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+"""Retrieve Data from the BMJV
+
+Usage:
+  BMJV [options]
+  BMJV [--mode <mode>] [--court <court>] [--loglevel LEVEL] [--limit <limit>]
+  BMJV (-h | --help | -v | --version)
+
+Options:
+  -h --help           Show this screen
+  -v --version        Show version
+  --loglevel LEVEL    Set a specific log level [default: INFO]
+
+Data options:
+  --court <court>       Select a specific court [default: bverfg]
+  --mode <mode>         Select a data source [default: rim]
+  --limit <limit>       Limit the amount fo results to diplay [default: 0]
+  --list-courts         Show all available courts
+
+"""
+
+VERSION = '1.2.0'
+
+### docopt ###
+from docopt import docopt
+arguments = docopt(__doc__, version=VERSION)
+
+### Logging ###
+import logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',
+    datefmt='%d-%b-%y %H:%M:%S',
+    level=getattr(logging, arguments['--loglevel'])
+)
+
 from datetime import datetime
 from obelixtools import API
-import logging, time
-import argparse
+import time
 from BMJV import *
 
 if __name__ == '__main__':
     logger = logging.getLogger(__name__)
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--mode', choices=['bgbl', 'rim'], help='Seth mode.')
-    parser.add_argument('--court', type=str, default='bverfg', help='Select a court. Only relevant if in rim mode.')
-    parser.add_argument('--limit', type=int, default=0, help='Limit the number of results.')
-    args = parser.parse_args()
-
-    logging.basicConfig(level=logging.INFO)
-    if args.mode == 'rim':
-        rim = RechtsprechungImInternet(args.court)
-        rim.fetch(args.limit)
+    if arguments['--list-courts']:
+        logger.info('The follwing IDs are available for --court')
+        for id, link in RechtsprechungImInternet.URLS.items():
+            logger.info('{} - {}'.format(id, link))
+    elif arguments['--mode'] == 'rim':
+        rim = RechtsprechungImInternet(arguments['--court'])
+        rim.fetch(int(arguments['--limit']))
         for item in rim.items:
             logger.info(item.formatted)
-
-    elif args.mode == 'bgbl':
+    elif arguments['--mode'] == 'bgbl':
         gim = BGBl()
-        gim.fetch(args.limit)
+        gim.fetch(int(arguments['--limit']))
         for item in gim.items:
             logger.info(item.formatted)

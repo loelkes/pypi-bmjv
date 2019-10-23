@@ -27,7 +27,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='BMJV',
-    version='1.1',
+    version='1.2.0',
     author='Christian Lölkes',
     author_email='christian.loelkes@gmail.com',
     description='Data from the Federal Ministry of Justice and Consumer Protection',
@@ -39,9 +39,13 @@ setuptools.setup(
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
+        'Intended Audience :: Legal Industry',
+        'Intended Audience :: Education',
+        'Natural Language :: German'
     ],
     python_requires='>=3.6',
     install_requires=[
-          'obelixtools'
+          'obelixtools',
+          'docopt'
       ],
 )
