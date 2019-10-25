@@ -1,6 +1,6 @@
 # BMJV
 
-*Note:* This a pathon wrapper around the data feeds from the Federal Ministry of Justice and Consumer Protection in Germany. It's content is exclusivly in German. Please see [Translations](https://www.gesetze-im-internet.de/Teilliste_translations.html) on the website of the ministry for further information.
+*Note:* This a Python wrapper around the data feeds from the Federal Ministry of Justice and Consumer Protection (BMJV) in Germany. It's content is exclusivly in German. Please see [Translations](https://www.gesetze-im-internet.de/Teilliste_translations.html) on the website of the BMJV for further information.
 
 **BMJV** stands for **B**undes**m**inisterium der **J**ustiz und für **V**erbraucherschutz (Federal Ministry of Justice and Consumer Protection).
 
@@ -8,14 +8,14 @@
 
 Install it with ```pip install bmjv```
 
-## Usage
+# Usage
 
-### Rechtsprechung im Internet
+## Rechtsprechung im Internet
 
 The latest rulings from the seven federal german courts.
 
-#### Examples
-##### As module
+### Examples
+#### As module
 ```
 from BMJV import RechtsprechungImInternet
 rim = RechtsprechungImInternet('bverfg')
@@ -23,7 +23,7 @@ rim.fetch(10)
 for item in rim.items:
     print(item.formatted)
 ```
-##### Standalone
+#### Standalone
 ```
 $ > python -m BMJV --mode rim --court bverfg --limit 2
 INFO:BMJV:Found a total of 2 results for bverfg
@@ -48,12 +48,12 @@ INFO:__main__:2019-10-02 23:38:07 - BVerfG 1. Senat 2. Kammer, Ablehnung einstwe
 * ```.pubdate``` : The publication as datetime object.
 * ```.formatted```: A formatted string like ```{.pubDate} - {.title} - {.description}```
 
-### Gesetze im Internet
+## Gesetze im Internet
 
 The latest laws published by the german government in the Bundesgesetzblatt (BGBl).
 
-#### Examples
-##### As module
+### Examples
+#### As module
 
 ```
 from BMJV import BGBl
@@ -62,7 +62,7 @@ gim.fetch(10)
 for item in rim.items:
     print(item.formatted)
 ```
-##### Standalone
+#### Standalone
 ```
 $ > python -m BMJV --mode bgbl --limit 4
 INFO:__main__:2017-06-09 05:30:02 - BGBl I  2017, 1396 - Gesetz zur Neuordnung der Aufbewahrung von Notariatsunterlagen und zur Einrichtung des Elektronischen Urkundenarchivs bei der Bundesnotarkammer sowie zur Änderung weiterer Gesetze vom 01. Juni 2017
@@ -79,7 +79,11 @@ INFO:__main__:2018-10-11 05:30:02 - BGBl I  2018, 1572 - Ausbildungs- und Prüfu
 * ```.pubdate``` : The publication as datetime object.
 * ```.formatted```: A formatted string like ```{.pubDate} - {.title} - {.description}```
 
-## Data sources
+# Data sources
 
 * [Gesetze im Internet](https://www.gesetze-im-internet.de/)
 * [Rechtsprechung im Internet](https://www.rechtsprechung-im-internet.de/)
+
+# Background
+
+This Python module was initially written for the ZKM-exhibition *Open Codes. Living in Digital Worlds* at the BMJV. Further information can be found on [zkm.de](https://zkm.de/en/exhibition/2019/03/open-codes-living-in-digital-worlds).
