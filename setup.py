@@ -27,7 +27,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='BMJV',
-    version='1.2.0',
+    version='1.3.0',
     author='Christian Lölkes',
     author_email='christian.loelkes@gmail.com',
     description='Data from the Federal Ministry of Justice and Consumer Protection',
