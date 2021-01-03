@@ -4,6 +4,7 @@ from obelixtools import API
 from .Judicature import Judicature
 import time
 import logging
+import csv
 
 class RechtsprechungImInternet(object):
 
@@ -60,3 +61,15 @@ class RechtsprechungImInternet(object):
             self.items = self.items[:limit]
         self.lastRefresh = time.time()
         self.__logger.info('Found a total of {} results for {}'.format(len(self.items), self.id))
+
+    def export_csv(self, filename=False):
+        """Export the data as CSV file"""
+        filename = filename or '{}_export.csv'.format(self.id)
+        fields = ['title','description','pubDate']
+        self.__logger.info('Export data to {}'.format(filename))
+        with open(filename, 'w', encoding='UTF-8') as csvfile:
+            writer = csv.writer(csvfile, delimiter=';')
+            writer.writerow(fields)
+            for item in self.items:
+                writer.writerow([getattr(item, key) for key in fields])
+        self.__logger.debug('Wrote a total of {} lines to {}'.format(len(self.items), filename))

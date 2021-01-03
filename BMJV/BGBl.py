@@ -4,6 +4,7 @@ from obelixtools import API
 from .Law import Law
 import time
 import logging
+import csv
 
 class BGBl(object):
     def __init__(self, url=False):
@@ -29,3 +30,15 @@ class BGBl(object):
         """Get the formatted string for this item
         """
         return u'{} - {} - {}'.format(self.pubDate, self.title, self.description)
+
+    def export_csv(self, filename=False):
+        """Export the data as CSV file"""
+        filename = filename or 'BGBl_export.csv'
+        self.__logger.info('Export data to {}'.format(filename))
+        fields = ['title', 'description', 'link', 'guid', 'pubDate']
+        with open(filename, 'w', encoding='UTF-8') as csvfile:
+            writer = csv.writer(csvfile, delimiter=';')
+            writer.writerow(fields)
+            for item in self.items:
+                writer.writerow([getattr(item, key) for key in fields])
+        self.__logger.debug('Wrote a total of {} lines to {}'.format(len(self.items), filename))

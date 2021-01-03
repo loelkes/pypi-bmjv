@@ -2,7 +2,7 @@
 
 Usage:
   BMJV [options]
-  BMJV [--mode <mode>] [--court <court>] [--loglevel LEVEL] [--limit <limit>]
+  BMJV [--mode <mode>] [--court <court>] [--loglevel LEVEL] [--limit <limit>] [--export-csv]
   BMJV (-h | --help | -v | --version)
 
 Options:
@@ -15,6 +15,7 @@ Data options:
   --mode <mode>         Select a data source [default: rim]
   --limit <limit>       Limit the amount fo results to diplay [default: 0]
   --list-courts         Show all available courts
+  --export-csv          Export the data as a CSV file
 
 """
 
@@ -47,10 +48,16 @@ if __name__ == '__main__':
     elif arguments['--mode'] == 'rim':
         rim = RechtsprechungImInternet(arguments['--court'])
         rim.fetch(int(arguments['--limit']))
-        for item in rim.items:
-            logger.info(item.formatted)
+        if arguments['--export-csv']:
+            rim.export_csv()
+        else:
+            for item in rim.items:
+                logger.info(item.formatted)
     elif arguments['--mode'] == 'bgbl':
         gim = BGBl()
         gim.fetch(int(arguments['--limit']))
-        for item in gim.items:
-            logger.info(item.formatted)
+        if arguments['--export-csv']:
+            gim.export_csv()
+        else:
+            for item in gim.items:
+                logger.info(item.formatted)
